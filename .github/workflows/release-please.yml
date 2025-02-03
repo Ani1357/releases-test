@@ -13,24 +13,18 @@ jobs:
   release-please:
     runs-on: ubuntu-latest
     steps:
-      - uses: googleapis/release-please-action@v4
-        with:
-          # this assumes that you have created a personal access token
-          # (PAT) and configured it as a GitHub action secret named
-          # `MY_RELEASE_PLEASE_TOKEN` (this secret name is not important).
-          token: ${{ secrets.MY_RELEASE_PLEASE_TOKEN }}
-          # this is a built-in strategy in release-please, see "Action Inputs"
-          # for more options
-          release-type: node
+      - uses: actions/checkout@v4
+        name: Checkout
+      - name: Get the tag
+        id: git_tag
+        run: echo "tag=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
       - name: Truncate changelog
         run: |
-          release_tag=v$(jq -r '.version' < package.json)
-          echo tag=$release_tag >> $GITHUB_OUTPUT
           sed -n '/### \[[0-9]*/q;p' CHANGELOG.md > NEW_CHANGELOG.md
       - name: Create GitHub release
         uses: ncipollo/release-action@v1.14.0
         env:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.MY_RELEASE_PLEASE_TOKEN }}
         with:
           tag: ${{ steps.git_tag.outputs.tag }}
           name: Release ${{ steps.git_tag.outputs.tag }}
