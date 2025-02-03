@@ -20,7 +20,7 @@ jobs:
         run: |
           release_tag=v$(jq -r '.version' < package.json)
           echo $release_tag
-          echo tag=$release_tag >> $GITHUB_OUTPUT
+          echo tag=$release_tag-1 >> $GITHUB_OUTPUT
       - name: Truncate changelog
         run: |
           sed -n '/### \[[0-9]*/q;p' CHANGELOG.md > NEW_CHANGELOG.md
