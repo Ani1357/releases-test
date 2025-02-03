@@ -18,7 +18,7 @@ jobs:
       - name: Get the tag
         id: git_tag
         run: |
-          echo "tag=$(jq -r '.version' package.json)" >> $GITHUB_ENV
+          echo "tag=$(jq -r '.version' package.json)" >> $GITHUB_OUTPUT
       - name: Truncate changelog
         run: |
           sed -n '/### \[[0-9]*/q;p' CHANGELOG.md > NEW_CHANGELOG.md
@@ -28,7 +28,7 @@ jobs:
         env:
           token: ${{ secrets.MY_RELEASE_PLEASE_TOKEN }}
         with:
-          tag: ${{ steps.git_tag.outputs.tag }}
+          tag: 
           name: Release ${{ steps.git_tag.outputs.tag }}
           bodyFile: 'NEW_CHANGELOG.md'
           generateReleaseNotes: true
