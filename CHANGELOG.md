@@ -1,5 +1,41 @@
 # Changelog
 
+## [3.0.0](https://github.com/Ani1357/releases-test/compare/v2.0.0...v3.0.0) (2025-02-03)
+
+
+### ⚠ BREAKING CHANGES
+
+* Re-invented
+
+### Features
+
+* adding feature  1 ([b3594a0](https://github.com/Ani1357/releases-test/commit/b3594a01a922e6c59a96eed3fe3eff92e048956b))
+* adding feature  10 ([9bc6168](https://github.com/Ani1357/releases-test/commit/9bc616862cf1473965271855ca75ea2d09522c15))
+* adding feature  2 ([91dd870](https://github.com/Ani1357/releases-test/commit/91dd870d710b9c942d5cbb7f00113d515891249f))
+* adding feature  3 ([33360dc](https://github.com/Ani1357/releases-test/commit/33360dc5de54097c1e3cadb8480aa589dd360cf7))
+* adding feature  4 ([15b7d39](https://github.com/Ani1357/releases-test/commit/15b7d3965d963c39ecba5181f3001a2e94c48b38))
+* adding feature  5 ([2d549c8](https://github.com/Ani1357/releases-test/commit/2d549c8ca9de44348340a526afe56ffb4def577d))
+* adding feature  6 ([c2e8093](https://github.com/Ani1357/releases-test/commit/c2e8093ea65b4bbec9e83fb406fd2d0cf05fdb25))
+* adding feature  7 ([5ae2d62](https://github.com/Ani1357/releases-test/commit/5ae2d629ea54357d82cad6f9e0755ba7bba2589b))
+* adding feature  8 ([b66e860](https://github.com/Ani1357/releases-test/commit/b66e8602c392f44e4acf16c5368a1ce29ea2387e))
+* adding feature  9 ([1c8e181](https://github.com/Ani1357/releases-test/commit/1c8e181f9e7f2ae442d0e0d5a0e1f61ae02925f7))
+* Re-invented ([59aec09](https://github.com/Ani1357/releases-test/commit/59aec09df4df15dc4a1c66b397719620055e91c0))
+
+
+### Bug Fixes
+
+* fixing issue 1 ([2df4e77](https://github.com/Ani1357/releases-test/commit/2df4e7719c28ca7c0dbb42c3afeb7cea9efb0ca8))
+* fixing issue 10 ([66c8cd0](https://github.com/Ani1357/releases-test/commit/66c8cd0153fc0daec67bae924f2b1a00e3a99955))
+* fixing issue 2 ([59bf3d8](https://github.com/Ani1357/releases-test/commit/59bf3d80a009c6fc63cef565a2804e8e23d57a21))
+* fixing issue 3 ([3856423](https://github.com/Ani1357/releases-test/commit/38564230ac41a893c8dc44aa5aae61c22da00db6))
+* fixing issue 4 ([c977fbb](https://github.com/Ani1357/releases-test/commit/c977fbbfb1300b0a2d71eba741499fffbd1f7951))
+* fixing issue 5 ([a6daa68](https://github.com/Ani1357/releases-test/commit/a6daa689c5e87daf8875322485215f63fae09c03))
+* fixing issue 6 ([ed840ad](https://github.com/Ani1357/releases-test/commit/ed840ad70ff928b09f891c87028efb1f89b90969))
+* fixing issue 7 ([401e148](https://github.com/Ani1357/releases-test/commit/401e1482fdf5adf39079e2df5fca26750752edb6))
+* fixing issue 8 ([2c4640f](https://github.com/Ani1357/releases-test/commit/2c4640fff57644e92eefe27f3711f60daa331f8d))
+* fixing issue 9 ([7c3340f](https://github.com/Ani1357/releases-test/commit/7c3340f0b7741932154cdad03b5147f72ff58745))
+* fxing fixes ([2fb4aad](https://github.com/Ani1357/releases-test/commit/2fb4aad5a51549cdd82371da451b4719b1fc536b))
+
 ## [2.0.0](https://github.com/Ani1357/releases-test/compare/v1.2.0...v2.0.0) (2025-02-03)
 
 
