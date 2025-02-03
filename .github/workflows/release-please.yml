@@ -18,11 +18,16 @@ jobs:
       - name: Get the tag
         id: git_tag
         run: |
+          echo pwd
+          pwd
+          echo ls
+          ls
           echo "tag=$(git describe --tags --abbrev=0)"
           echo "tag=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
       - name: Truncate changelog
         run: |
           sed -n '/### \[[0-9]*/q;p' CHANGELOG.md > NEW_CHANGELOG.md
+          cat NEW_CHANGELOG.md
       - name: Create GitHub release
         uses: ncipollo/release-action@v1.14.0
         env:
