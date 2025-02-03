@@ -1,5 +1,22 @@
 # Changelog
 
+## [2.0.0](https://github.com/Ani1357/releases-test/compare/v1.2.0...v2.0.0) (2025-02-03)
+
+
+### ⚠ BREAKING CHANGES
+
+* major fix
+
+### Features
+
+* add feature ([30d61b8](https://github.com/Ani1357/releases-test/commit/30d61b86f873f04d92bebd5baabb375ff589520f))
+
+
+### Bug Fixes
+
+* add fix ([772a7de](https://github.com/Ani1357/releases-test/commit/772a7ded4b39ed4112d8440a56ca8439fc6e3d23))
+* major fix ([94bf7a8](https://github.com/Ani1357/releases-test/commit/94bf7a8922c5a9bb4f562f35acd376028ab06de0))
+
 ## [1.2.0](https://github.com/Ani1357/releases-test/compare/v1.1.0...v1.2.0) (2025-02-03)
 
 
