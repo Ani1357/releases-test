@@ -18,13 +18,7 @@ jobs:
       - name: Get the tag
         id: git_tag
         run: |
-          echo pwd
-          pwd
-          echo ls
-          ls
-          echo "tag=$(jq -r '.version' package.json)"
-          echo "tag=$(git describe --tags --abbrev=0)"
-          echo "tag=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
+          echo "tag=$(jq -r '.version' package.json)" >> $GITHUB_ENV
       - name: Truncate changelog
         run: |
           sed -n '/### \[[0-9]*/q;p' CHANGELOG.md > NEW_CHANGELOG.md
