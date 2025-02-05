@@ -13,5 +13,8 @@
   "dependencies": {
     "express": "^4.21.2",
     "release-please": "^16.15.0"
+  },
+  "devDependencies": {
+    "release-it": "^18.1.2"
   }
 }
