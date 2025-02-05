@@ -13,24 +13,28 @@ jobs:
   release-please:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-        name: Checkout
-      - name: Get the tag
-        id: git_tag
-        run: |
-          release_tag=v$(jq -r '.version' < package.json)
-          echo $release_tag
-          echo tag=$release_tag >> $GITHUB_OUTPUT
-      - name: Truncate changelog
-        run: |
-          sed -n '/## \[[0-9]*/q;p' CHANGELOG.md > NEW_CHANGELOG.md
-          cat NEW_CHANGELOG.md
-      - name: Create GitHub release
-        uses: ncipollo/release-action@v1.14.0
-        env:
-          token: ${{ secrets.MY_RELEASE_PLEASE_TOKEN }}
+      # - uses: actions/checkout@v4
+      #   name: Checkout
+      # - name: Get the tag
+      #   id: git_tag
+      #   run: |
+      #     release_tag=v$(jq -r '.version' < package.json)
+      #     echo $release_tag
+      #     echo tag=$release_tag >> $GITHUB_OUTPUT
+      # - name: Truncate changelog
+      #   run: |
+      #     sed -n '/## \[[0-9]*/q;p' CHANGELOG.md > NEW_CHANGELOG.md
+      #     cat NEW_CHANGELOG.md
+      # - name: Create GitHub release
+      #   uses: ncipollo/release-action@v1.14.0
+      #   env:
+      #     token: ${{ secrets.MY_RELEASE_PLEASE_TOKEN }}
+      #   with:
+      #     tag: ${{ steps.git_tag.outputs.tag }}
+      #     name: Release ${{ steps.git_tag.outputs.tag }}
+      #     bodyFile: 'NEW_CHANGELOG.md'
+      #     generateReleaseNotes: true
+      - uses: googleapis/release-please-action@v4
         with:
-          tag: ${{ steps.git_tag.outputs.tag }}
-          name: Release ${{ steps.git_tag.outputs.tag }}
-          bodyFile: 'NEW_CHANGELOG.md'
-          generateReleaseNotes: true
+          token: ${{ secrets.MY_RELEASE_PLEASE_TOKEN }}
+          release-type: node
