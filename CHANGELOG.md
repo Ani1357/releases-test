@@ -1,5 +1,23 @@
 # Changelog
 
+## [6.0.0](https://github.com/Ani1357/releases-test/compare/v5.0.0...v6.0.0) (2025-02-12)
+
+
+### ⚠ BREAKING CHANGES
+
+* major change
+
+### Features
+
+* major change ([5f7a41b](https://github.com/Ani1357/releases-test/commit/5f7a41be52c1cf206b4b55faef88fda31360541d))
+* new feature ([fa88411](https://github.com/Ani1357/releases-test/commit/fa884116c15b34dbc34edd5e2258d2fa3c0d13a3))
+
+
+### Bug Fixes
+
+* another fix ([2d740ad](https://github.com/Ani1357/releases-test/commit/2d740adb092cd08b07373f4e5e3dd0d15b2b4699))
+* smth was fixed ([a3dce88](https://github.com/Ani1357/releases-test/commit/a3dce886aa6a16afa201f8489525656693cef91a))
+
 ## [5.0.0](https://github.com/Ani1357/releases-test/compare/releases-test-v4.0.0...releases-test-v5.0.0) (2025-02-05)
 
 
