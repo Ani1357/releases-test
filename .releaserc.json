@@ -12,7 +12,7 @@
       "range": "RANGE"
     },
     {
-      "name": "pre/rc",
+      "name": "PRE_RELEASE_BRANCH",
       "prerelease": "rc"
     }
     ],

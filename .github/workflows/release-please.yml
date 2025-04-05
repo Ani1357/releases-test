@@ -25,15 +25,16 @@ jobs:
 
           current_branch=$(git branch --show-current)
           #Checking is current_branch starts with backports-vX.X
-          if [[ $current_branch =~ ^backports-v[0-9]+\.[0-9]+$ ]]; then
-            range="${current_branch#backports-}.x"
-            jq --arg branch "$current_branch" --arg range "$range" '
-            .branches |= map(if type == "object" and .name == "MAINTENANCE_BRANCH"
-              then .name = $branch | .range = $range
+          
+          if [[ $current_branch =~ ^prerelease-v[0-9]+\.[0-9]+$ ]]; then
+            jq --arg branch "$current_branch" '
+            .branches |= map(if type == "object" and .name == "PRE_RELEASE_BRANCH"
+              then .name = $branch
               else . end)' \
             .releaserc.json > .releaserc.json.tmp
             mv .releaserc.json.tmp .releaserc.json
-          elif [[ $current_branch =~ ^release-v[0-9]+\.[0-9]+\.0$ ]]; then
+            
+          elif [[ $current_branch =~ ^release-v[0-9]+\.[0-9]$ ]]; then
             jq --arg branch "$current_branch" '
             .branches |= map(if type == "object" and .name == "RELEASE_BRANCH"
               then .name = $branch
@@ -52,20 +53,4 @@ jobs:
           cat .releaserc.json
           echo "#####-----------------------------------------------#####"
           npx semantic-release --dry-run=${{ github.event.inputs.dry-run }}
-          
-          # If branch is a release branch then create the respective backport branch from the release tag after the previous npx command runs successfully.
-          # This is needed to create the backport branch for the next release.
-          if [[ $current_branch =~ ^release-v[0-9]+\.[0-9]+\.0$ ]] && [[ ${{ github.event.inputs.dry-run }} == false ]]; then
-            echo "Creating backport branch for next release"
-            # Get the latest tag E.g. v1.0.0
-            latest_tag=$(git describe --tags `git rev-list --tags --max-count=1`)
-            # Create the backport branch if not already created
-            if git show-ref --verify --quiet refs/heads/backports-${latest_tag%.*}; then
-              echo "Backport branch already exists"
-            else
-              echo "Creating backport branch"
-              git checkout -b backports-${latest_tag%.*}
-              git push origin backports-${latest_tag%.*}
-            fi
-          fi
           
