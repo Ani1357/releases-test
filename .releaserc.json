@@ -42,7 +42,10 @@
     [
       "@semantic-release/github",
       {
-        "addChannel": ["maintenance"]
+        "addChannel": ["maintenance"],
+        "successComment": false,
+        "failComment": false,
+        "falsefailTitle": false
       }
   ]
   ]
