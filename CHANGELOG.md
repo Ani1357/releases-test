@@ -1,3 +1,10 @@
+# [7.1.0-rc.2](https://github.com/Ani1357/releases-test/compare/v7.1.0-rc.1...v7.1.0-rc.2) (2025-04-06)
+
+
+### Features
+
+* feature 2 (v7.1.0-rc1) ([7df9d0f](https://github.com/Ani1357/releases-test/commit/7df9d0f390964fd5fcb44964eb3759b68fe918ba))
+
 # [7.1.0-rc.1](https://github.com/Ani1357/releases-test/compare/v7.0.0...v7.1.0-rc.1) (2025-04-05)
 
 
