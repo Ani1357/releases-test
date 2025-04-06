@@ -1,3 +1,16 @@
+# [7.1.0](https://github.com/Ani1357/releases-test/compare/v7.0.0...v7.1.0) (2025-04-06)
+
+
+### Bug Fixes
+
+* bug fix 1 (v7.1.0) ([b53bba3](https://github.com/Ani1357/releases-test/commit/b53bba31827c8533ceffde0ddffce463fa35ad0a))
+
+
+### Features
+
+* feature 1 (v7.1.0) ([d6a153d](https://github.com/Ani1357/releases-test/commit/d6a153d9676bec460e54a2614421a1ed37816692))
+* feature 2 (v7.1.0-rc1) ([7df9d0f](https://github.com/Ani1357/releases-test/commit/7df9d0f390964fd5fcb44964eb3759b68fe918ba))
+
 # [7.1.0-rc.1](https://github.com/Ani1357/releases-test/compare/v7.0.0...v7.1.0-rc.1) (2025-04-05)
 
 
