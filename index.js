@@ -10,40 +10,10 @@ app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
 });
 
-// a new fix
-// more fixes
+// 
+// BREAKING CHANGE: Major rework
 
-// a feature
-// new feature
-// another feature
-// add fix
-// BREAKING CHANGE: fix
-//fix number 1
-//fix number 2
-//fix number 3
-//fix number 4
-//fix number 5
-//fix number 6
-//fix number 7
-//fix number 8
-//fix number 9
-//fix number 10
-//feat number 1
-//feat number 2
-//feat number 3
-//feat number 4
-//feat number 5
-//feat number 6
-//feat number 7
-//feat number 8
-//feat number 9
-//feat number 10
-// BREAKING CHANGE: feat
-// a fix
-// another fix
-// a fix
+// feat: feature 1 (v7.1.0)
+// fix: bug fix 1 (v7.1.0) | fix: bug fix 2 (v7.1.0-rc1)
 
-//feat: new feature
-//breaking change
-
-// chore: add a chore
+// feat: feature 1 (v7.2.0)
