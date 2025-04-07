@@ -1,56 +1,30 @@
-name: Release
-
 on:
-  workflow_dispatch:
-    inputs:
-      dry-run:
-        type: boolean
-        description: 'Dry run'
-        default: true
+  push:
+    branches:
+      - master
+      - release-candidate-*
+      - maintenance-*
+
+permissions:
+  contents: write
+  pull-requests: write
+
+name: release-please
 
 jobs:
-  semantic-release:
-    permissions:
-      contents: write
-      pull-requests: write
+  release-please:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
-      - name: Set current branch
+        uses: actions/checkout@v2
+      - name: Determine the release type based on the branch name
+        id: release-type
         run: |
-          # Update the .releaserc.json file with the current branch name. 
-          # Needed for semantic-release to work with maintenace branches.
-          # https://github.com/semantic-release/semantic-release/issues/2503
-
-          current_branch=$(git branch --show-current)
-          #Checking is current_branch starts with backports-vX.X
-          
-          if [[ $current_branch =~ ^prerelease-v[0-9]+\.[0-9]+$ ]]; then
-            jq --arg branch "$current_branch" '
-            .branches |= map(if type == "object" and .name == "PRE_RELEASE_BRANCH"
-              then .name = $branch
-              else . end)' \
-            .releaserc.json > .releaserc.json.tmp
-            mv .releaserc.json.tmp .releaserc.json
-            
-          elif [[ $current_branch =~ ^release-v[0-9]+\.[0-9]$ ]]; then
-            jq --arg branch "$current_branch" '
-            .branches |= map(if type == "object" and .name == "RELEASE_BRANCH"
-              then .name = $branch
-              else . end)' \
-            .releaserc.json > .releaserc.json.tmp
-            mv .releaserc.json.tmp .releaserc.json
+          if [[ "${GITHUB_REF}" != "refs/heads/master" ]]; then
+            echo "prerelease=true" >> $GITHUB_ENV
           fi
-
-      - name: Install dependencies
-        run: npm clean-install
-      - name: Release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          echo "Running semantic-release with the following configuration:"
-          cat .releaserc.json
-          echo "#####-----------------------------------------------#####"
-          npx semantic-release --dry-run=${{ github.event.inputs.dry-run }}
-          
+      - uses: googleapis/release-please-action@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          release-type: node
+          prerelease: ${{ env.prerelease }}
