@@ -16,4 +16,4 @@ app.listen(port, () => {
 // feat: feature 1 (v7.1.0)
 // fix: bug fix 1 (v7.1.0) | fix: bug fix 2 (v7.1.0-rc1)
 
-// feat: feature 1 (v7.2.0)
+// feat: feature 1 (v7.2.0) | bug fix
