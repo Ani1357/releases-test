@@ -24,6 +24,19 @@
 
 # Changelog
 
+## [7.2.1](https://github.com/Ani1357/releases-test/compare/v7.2.0-rc.1...v7.2.1) (2025-04-07)
+
+
+### Bug Fixes
+
+* bug fix ferture 1 (v7.2.0) ([8d771db](https://github.com/Ani1357/releases-test/commit/8d771db81f99050232ba8f0a9f35be574a402dc3))
+
+
+### Miscellaneous Chores
+
+* release 7.2.1 ([47f4731](https://github.com/Ani1357/releases-test/commit/47f4731e7df1f8f4f61267318be46e7fbf9555fb))
+* release 7.2.1 ([71de3c4](https://github.com/Ani1357/releases-test/commit/71de3c402b115140bd2221f8678b3c0d2cf1e658))
+
 ## [7.2.0-rc.1](https://github.com/Ani1357/releases-test/compare/v7.1.0-rc.1...v7.2.0-rc.1) (2025-04-07)
 
 
