@@ -24,6 +24,14 @@
 
 # Changelog
 
+## [7.2.0-rc.1](https://github.com/Ani1357/releases-test/compare/v7.1.0-rc.1...v7.2.0-rc.1) (2025-04-07)
+
+
+### Features
+
+* feature 2 (v7.1.0-rc1) ([7df9d0f](https://github.com/Ani1357/releases-test/commit/7df9d0f390964fd5fcb44964eb3759b68fe918ba))
+* feature 2 (v7.1.0-rc1) ([bb0a1ba](https://github.com/Ani1357/releases-test/commit/bb0a1bacd67706cf6feefbac4943237ccd834e64))
+
 ## [6.0.0](https://github.com/Ani1357/releases-test/compare/v5.0.0...v6.0.0) (2025-02-12)
 
 
