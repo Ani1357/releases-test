@@ -31,12 +31,7 @@ jobs:
         run: echo "${{ secrets.PR_UPDATE_TOKEN }}" | gh auth login --with-token
       - name: Authenticate Git
         run: |
-          git config --global user.email "${{ secrets.BOT_EMAIL }}"
-          git config --global user.name "${{ secrets.BOT_USERNAME }}"
-          git remote set-url origin https://x-access-token:${{ secrets.BOT_TOKEN }}@github.com/${{ github.repository }}
-          git fetch origin main
-          git checkout main
-          git pull origin main
+          git remote set-url origin https://x-access-token:${{ secrets.PR_UPDATE_TOKEN }}@github.com/${{ github.repository }}
       - name: Update PR branches
         run: |
           prs=$(gh pr list --state open --base main --json number,headRefName -q '.[] | [.number, .headRefName] | @tsv')
@@ -48,7 +43,7 @@ jobs:
             git checkout "$branch"
 
             if git merge origin/main --no-edit; then
-              git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} "$branch"
+              git push "$branch"
               echo "✅ Updated $branch"
             else
               echo "❌ Merge conflict on $branch — skipped."
