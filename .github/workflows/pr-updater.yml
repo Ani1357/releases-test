@@ -15,7 +15,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 50
+          fetch-depth: 0
 
       - name: Install GitHub CLI
         run: |
@@ -31,6 +31,8 @@ jobs:
         run: echo "${{ secrets.PR_UPDATE_TOKEN }}" | gh auth login --with-token
 
       - name: Update PR branches
+        env:
+          GITHUB_TOKEN: ${{ secrets.PR_UPDATE_TOKEN }}
         run: |
           prs=$(gh pr list --state open --base main --json number,headRefName -q '.[] | [.number, .headRefName] | @tsv')
 
@@ -41,14 +43,7 @@ jobs:
             git checkout "$branch"
 
             if git merge origin/main --no-edit; then
-              echo "#########################Diff with origin/main before merging#################################"
-              git diff origin/main $branch
-              echo "#########################Diff with origin/main before merging#################################"
-              echo "#########################Git status#################################"
-              git status
-              echo "#########################Git status#################################"
-              git push https://x-access-token:${{ secrets.PR_UPDATE_TOKEN }}@github.com/${{ github.repository }} "$branch"
-              https://<TOKEN>@github.com/<username>/<repository>.git
+              git push origin HEAD:$branch
               echo "✅ Updated $branch"
             else
               echo "❌ Merge conflict on $branch — skipped."
