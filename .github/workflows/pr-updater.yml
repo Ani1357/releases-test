@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Who am I?
         run: |
-          curl -H "Authorization: token ${{ secrets.PAT_TOKEN }}" https://api.github.com/user
+          curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/user
       - name: Update ALL THE PRS! 🎉
         uses: castastrophe/actions-pr-auto-update@v1.1.0
 
