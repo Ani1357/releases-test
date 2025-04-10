@@ -41,10 +41,13 @@ jobs:
             git checkout "$branch"
 
             if git merge origin/main --no-edit; then
-              echo "#########################Git status#################################"
+              echo "#########################Diff with origin/main before merging#################################"
               git diff origin/main $branch
+              echo "#########################Diff with origin/main before merging#################################"
               echo "#########################Git status#################################"
-              git push origin "$branch"
+              git status
+              echo "#########################Git status#################################"
+              git push https://x-access-token:${{ secrets.PR_UPDATE_TOKEN }}@github.com/${{ github.repository }} "$branch"
               https://<TOKEN>@github.com/<username>/<repository>.git
               echo "✅ Updated $branch"
             else
