@@ -4,17 +4,15 @@ on:
     push:
         branches:
             - main
+permissions:
+    pull-requests: write
 
 jobs:
     autoupdate:
         runs-on: ubuntu-latest
-        permissions:
-            pull-requests: write
-            contents: write
         steps:
           - name: Checkout
             uses: actions/checkout@v4
           - name: Update ALL THE PRS! 🎉
             uses: castastrophe/actions-pr-auto-update@v1.1.0
-            with:
-              token: ${{ secrets.GITHUB_TOKEN }}
+
