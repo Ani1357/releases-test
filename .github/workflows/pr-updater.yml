@@ -14,4 +14,4 @@ jobs:
           - name: Checkout
             uses: actions/checkout@v4
           - name: Update ALL THE PRS! 🎉
-            uses: castastrophe/actions-pr-auto-update@1.1.0
+            uses: castastrophe/actions-pr-auto-update@v1.1.0
