@@ -13,13 +13,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Who am I?
-        env: 
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          curl -H "Authorization: token ${{ env.GITHUB_TOKEN }}" https://api.github.com/user
       - name: Update ALL THE PRS! 🎉
-        env: 
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          token: ${{ secrets.PR_UPDATE_TOKEN }}
         uses: castastrophe/actions-pr-auto-update@v1.1.0
 
