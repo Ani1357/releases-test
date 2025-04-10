@@ -35,11 +35,10 @@ jobs:
           while IFS=$'\t' read -r number branch; do
             echo "Updating PR #$number (branch: $branch)"
 
-            git fetch origin main
             git fetch origin "$branch"
             git checkout "$branch"
 
-            if git merge origin/main --no-edit; then
+            if git merge origin/main --no-edit --allow-unrelated-histories; then
               git push origin "$branch"
               echo "✅ Updated $branch"
             else
