@@ -14,6 +14,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 50
 
       - name: Install GitHub CLI
         run: |
@@ -38,7 +40,7 @@ jobs:
             git fetch origin "$branch"
             git checkout "$branch"
 
-            if git merge origin/main --no-edit --allow-unrelated-histories; then
+            if git merge origin/main --no-edit; then
               git push origin "$branch"
               echo "✅ Updated $branch"
             else
