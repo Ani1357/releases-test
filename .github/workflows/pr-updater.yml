@@ -11,7 +11,7 @@ jobs:
         permissions:
             pull-requests: write
         steps:
-        - name: Checkout
-          uses: actions/checkout@v4
-        - name: Update ALL THE PRS! 🎉
-          uses: castastrophe/actions-pr-auto-update
+          - name: Checkout
+            uses: actions/checkout@v4
+          - name: Update ALL THE PRS! 🎉
+            uses: castastrophe/actions-pr-auto-update
