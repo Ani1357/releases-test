@@ -1,18 +1,18 @@
 name: Pull request update
 
 on:
-    push:
-        branches:
-            - main
+  push:
+    branches:
+      - main
 permissions:
-    pull-requests: write
+  pull-requests: write
 
 jobs:
-    autoupdate:
-        runs-on: ubuntu-latest
-        steps:
-          - name: Checkout
-            uses: actions/checkout@v4
-          - name: Update ALL THE PRS! 🎉
-            uses: castastrophe/actions-pr-auto-update@v1.1.0
+  autoupdate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Update ALL THE PRS! 🎉
+        uses: castastrophe/actions-pr-auto-update@v1.1.0
 
