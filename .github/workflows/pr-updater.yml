@@ -38,6 +38,10 @@ jobs:
           git config --list
           echo "-----------------Git config----------------------------"
 
+          echo "-----------------Git status----------------------------"
+          git status
+          echo "-----------------Git status----------------------------"
+
           while IFS=$'\t' read -r number branch; do
             echo "Updating PR #$number (branch: $branch)"
 
@@ -45,6 +49,7 @@ jobs:
             git checkout "$branch"
 
             if git merge origin/main --no-edit; then
+              echo "git remote set-url origin https://x-access-token:${{ secrets.PR_UPDATE_TOKEN }}@github.com/${{ github.repository }}.git"
               git remote set-url origin https://x-access-token:${{ secrets.PR_UPDATE_TOKEN }}@github.com/${{ github.repository }}.git
               git push origin HEAD:$branch
               echo "✅ Updated $branch"
