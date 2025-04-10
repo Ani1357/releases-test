@@ -43,7 +43,7 @@ jobs:
             git checkout "$branch"
 
             if git merge origin/main --no-edit; then
-              git push "$branch"
+              git push origin "$branch"
               echo "✅ Updated $branch"
             else
               echo "❌ Merge conflict on $branch — skipped."
