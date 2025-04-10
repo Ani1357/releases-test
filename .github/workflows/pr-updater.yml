@@ -41,13 +41,9 @@ jobs:
             git checkout "$branch"
 
             if git merge origin/main --no-edit; then
-              echo "#########################Diff with origin/main before merging#################################"
+              echo "#########################Git status#################################"
               git diff origin/main $branch
-              echo "#########################Diff with origin/main before merging#################################"
-              echo "#########################Git remote#################################"
-              git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
-              git remote -v
-              echo "#########################Git remote#################################"
+              echo "#########################Git status#################################"
               git push origin "$branch"
               https://<TOKEN>@github.com/<username>/<repository>.git
               echo "✅ Updated $branch"
