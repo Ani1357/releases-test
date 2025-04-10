@@ -29,9 +29,7 @@ jobs:
 
       - name: Authenticate GitHub CLI
         run: echo "${{ secrets.PR_UPDATE_TOKEN }}" | gh auth login --with-token
-      - name: Authenticate Git
-        run: |
-          git remote set-url origin https://x-access-token:${{ secrets.PR_UPDATE_TOKEN }}@github.com/${{ github.repository }}
+
       - name: Update PR branches
         run: |
           prs=$(gh pr list --state open --base main --json number,headRefName -q '.[] | [.number, .headRefName] | @tsv')
@@ -43,7 +41,7 @@ jobs:
             git checkout "$branch"
 
             if git merge origin/main --no-edit; then
-              git push origin "$branch"
+              git push https://x-access-token:${{ secrets.PR_UPDATE_TOKEN }}@github.com/${{ github.repository }} "$branch"
               echo "✅ Updated $branch"
             else
               echo "❌ Merge conflict on $branch — skipped."
