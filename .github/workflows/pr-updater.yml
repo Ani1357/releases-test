@@ -14,6 +14,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Install GitHub CLI
         run: |
@@ -22,11 +24,11 @@ jobs:
 
       - name: Configure Git
         run: |
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git config --global user.name "github-actions"
+          git config --global user.name "Auto PR Updater"
+          git config --global user.email "auto-pr-updater@github.com"
 
       - name: Authenticate GitHub CLI
-        run: echo "${{ secrets.PR_UPDATE_TOKEN }}" | gh auth login --with-token
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
 
       - name: Update PR branches
         run: |
@@ -34,12 +36,10 @@ jobs:
 
           while IFS=$'\t' read -r number branch; do
             echo "Updating PR #$number (branch: $branch)"
-
             git fetch origin "$branch"
             git checkout "$branch"
-
             if git merge origin/main --no-edit; then
-              git push origin "$branch"
+              git push origin HEAD:$branch
               echo "✅ Updated $branch"
             else
               echo "❌ Merge conflict on $branch — skipped."
