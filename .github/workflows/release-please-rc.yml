@@ -77,12 +77,12 @@ jobs:
           release-please github-release \
             --token=${{ secrets.GITHUB_TOKEN }} \
             --prerelease=true \
-            --repo_url=${{ github.repository }} --dry-run
+            --repo-url=${{ github.repository }} --dry-run
 
         else
           echo "Running in dry run mode"
           release-please github-release \
             --token=${{ secrets.GITHUB_TOKEN }} \
             --prerelease=true \
-            --repo_url=${{ github.repository }}
+            --repo-url=${{ github.repository }}
         fi
