@@ -28,6 +28,11 @@ on:
         - true
         - false
 
+permissions:
+  contents: write
+  pull-requests: write
+  id-token: write
+
 jobs:
   create_release:
     if: ${{ github.event.inputs.create_or_patch == 'create' }}
