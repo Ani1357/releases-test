@@ -11,6 +11,7 @@
   "description": "",
   "dependencies": {
     "express": "^5.1.0",
-    "release-please": "^17.0.0"
+    "release-please": "^17.0.0",
+    "standard-version": "^9.5.0"
   }
 }
