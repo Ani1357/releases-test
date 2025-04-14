@@ -1,6 +1,6 @@
 {
   "name": "releases-test",
-  "version": "7.5.0",
+  "version": "7.2.0-rc1",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
