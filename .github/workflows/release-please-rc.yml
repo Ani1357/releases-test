@@ -50,35 +50,34 @@ jobs:
     - name: Create release candidate
       id: create_release
       run: |
-
-        git config --global user.email "githubactions_rc@github.com"
-        git config --global user.name "GitHub Action RC"
-        
         git reset --hard ${{ env.commit_sha }}
         
         latest_release_tag=$(git tag | sort -u | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | tail -n 1)
-        new_rc_tag="v$(echo $latest_release_tag | sed -E 's/v([0-9]+)\.([0-9]+)\.([0-9]+)/\1.\2.\3-rc1/')"
-        branch_name=rc/$(echo "${new_rc_tag%-*}"| cut -d. -f1-2)
+        echo "Latest release tag is $latest_release_tag"
+        echo 'new_rc_tag=${latest_release_tag%.*}-rc1' >> $GITHUB_ENV
+        echo "New RC tag is $new_rc_tag"
+        echo 'branch_name=rc/$(echo "${new_rc_tag%-*}"| cut -d. -f1-2)' >> $GITHUB_ENV'
+        echo "New branch name is $branch_name"
 
-        # Update the version in package.json
-        jq --arg new_rc_tag "$new_rc_tag" '.version = $new_rc_tag' package.json > tmp.json && mv tmp.json package.json
-        # Update the version in package-lock.json
-        jq --arg new_rc_tag "$new_rc_tag" '.version = $new_rc_tag' package-lock.json > tmp.json && mv tmp.json package-lock.json
-        
-
+    - name: Install release-please
+      run: |
+        npm install -g release-please
+        echo "Release-please installed"
+    - name: Create release candidate
+      id: create_release_candidate
+      run: |
+        echo "Creating release candidate"
         if [ "${{ github.event.inputs.dry_run }}" == "true" ]; then
-          echo "Dry run enabled. The following commands would be executed:"
-          echo "git checkout -b $branch_name"
-          echo "git tag $new_rc_tag"
-          echo "git push -u origin $branch_name --follow-tags"
+          echo "Running in dry run mode"
+          release-please github-release \
+            --token=${{ secrets.GITHUB_TOKEN }} \
+            --prerelease=true \
+            --repo_url=${{ github.repository }} --dry-run
+
         else
-          git checkout -b $branch_name
-          # Update the version in package.json
-          jq --arg new_rc_tag "$new_rc_tag" '.version = $new_rc_tag' package.json > tmp.json && mv tmp.json package.json
-          # Update the version in package-lock.json
-          jq --arg new_rc_tag "$new_rc_tag" '.version = $new_rc_tag' package-lock.json > tmp.json && mv tmp.json package-lock.json
-          git add package.json package-lock.json
-          git commit -m "chore: release candidate $new_rc_tag"
-          git tag $new_rc_tag
-          git push -u origin $branch_name --follow-tags
+          echo "Running in dry run mode"
+          release-please github-release \
+            --token=${{ secrets.GITHUB_TOKEN }} \
+            --prerelease=true \
+            --repo_url=${{ github.repository }}
         fi
