@@ -1,93 +1,31 @@
-name: Create Release Candidate
-
 on:
-  workflow_dispatch:
-    inputs:
-      create_or_patch:
-        description: 'Do you want to create a new release or a patch an existing one?'
-        required: true
-        default: 'create'
-        type: choice
-        options:
-        - create
-        - patch
-      rc_commit_sha:
-        description: 'If create was selected, provide commit from which to create the release candidate'
-        required: false
-        type: string
-      patch_commit_shas:
-        description: 'If patch was selected provide comma separated list of commits to be included in the patch'
-        required: false
-        type: string
-      dry_run:
-        description: 'If you want to run the workflow without making any changes'
-        required: true
-        default: 'true'
-        type: choice
-        options:
-        - true
-        - false
+  push:
+    branches:
+      - main
+      - rc/*
 
 permissions:
   contents: write
   pull-requests: write
-  id-token: write
+
+name: release-please-rc
+description: Create a release candidate (RC) for the release-please action
 
 jobs:
-  create_release:
-    if: ${{ github.event.inputs.create_or_patch == 'create' }}
+  release-please-rc:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-      with:
-        fetch-depth: 0
-    - name: Determine commit from where to create the RC
-      id: determine_commit
-      run: |
-        if [ "${{ github.event.inputs.rc_commit_sha }}" == "" ]; then
-          echo "No commit sha provided, using the latest commit"
-          echo "commit_sha=$(git rev-parse HEAD)" >> $GITHUB_ENV
-        else
-          echo "Using provided commit sha"
-          echo "commit_sha=${{ github.event.inputs.rc_commit_sha }}" >> $GITHUB_ENV
-        fi
-    - name: Create release candidate
-      id: create_release
-      run: |
-        git reset --hard ${{ env.commit_sha }}
-        
-        latest_release_tag=$(git tag | sort -u | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | tail -n 1)
-        echo "Latest release tag is $latest_release_tag"
-        
-        # Creating new rc version
-        new_rc_version=$(echo "$latest_release_tag" | awk -F. '{printf "%s.%s-rc1", $1, $2+1}')
-        echo "new_rc_version=$new_rc_version" >> $GITHUB_ENV
-        echo 'branch_name=rc/$(echo "${new_rc_tag%-*}"| cut -d. -f1-2)' >> $GITHUB_ENV
-        echo "New branch name is $branch_name"
-
-    - name: Install release-please
-      run: |
-        npm install -g release-please
-        echo "Release-please installed"
-    - name: Create release candidate
-      id: create_release_candidate
-      run: |
-        git status
-
-        echo "Creating release candidate"
-      
-        if [ "${{ github.event.inputs.dry_run }}" == "true" ]; then
-          echo "Running in dry run mode"
-          release-please github-release \
-            --token=${{ secrets.GITHUB_TOKEN }} \
-            --prerelease=true \
-            --repo-url=${{ github.repository }} --dry-run
-
-        else
-          echo "Running in dry run mode"
-          release-please github-release \
-            --token=${{ secrets.GITHUB_TOKEN }} \
-            --prerelease=true \
-            --repo-url=${{ github.repository }}
-        fi
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: googleapis/release-please-action@v4
+        with:
+          # this assumes that you have created a personal access token
+          # (PAT) and configured it as a GitHub action secret named
+          # `MY_RELEASE_PLEASE_TOKEN` (this secret name is not important).
+          token: ${{ secrets.MY_RELEASE_PLEASE_TOKEN }}
+          # optional. customize path to release-please-config.json
+          config-file: release-please-config-rc.json
+          # optional. customize path to .release-please-manifest.json
+          manifest-file: .release-please-manifest.json
