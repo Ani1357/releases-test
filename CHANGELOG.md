@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [7.5.0](https://github.com/Ani1357/releases-test/compare/releases-test-v7.4.0...releases-test-v7.5.0) (2025-04-14)
+
+
+### Features
+
+* new feature ([dd919d8](https://github.com/Ani1357/releases-test/commit/dd919d816b5074064ea2db1073a340a5213a947a))
+
+
+### Bug Fixes
+
+* small bug fix ([edde518](https://github.com/Ani1357/releases-test/commit/edde5181f0bdfb217917405605c4d02f0d227cf9))
+
 ## [7.5.0](https://github.com/Ani1357/releases-test/compare/v7.2.0-rc.1...v7.5.0) (2025-04-14)
 
 
