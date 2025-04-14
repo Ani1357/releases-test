@@ -47,7 +47,7 @@ jobs:
           echo "Using provided commit sha"
           echo "commit_sha=${{ github.event.inputs.rc_commit_sha }}" >> $GITHUB_ENV
         fi
-    - name: Create release candidate
+    - name: Create release candidate branch
       id: create_release
       run: |
 
@@ -59,26 +59,19 @@ jobs:
         latest_release_tag=$(git tag | sort -u | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | tail -n 1)
         new_rc_tag="v$(echo $latest_release_tag | sed -E 's/v([0-9]+)\.([0-9]+)\.([0-9]+)/\1.\2.\3-rc1/')"
         branch_name=rc/$(echo "${new_rc_tag%-*}"| cut -d. -f1-2)
-
-        # Update the version in package.json
-        jq --arg new_rc_tag "$new_rc_tag" '.version = $new_rc_tag' package.json > tmp.json && mv tmp.json package.json
-        # Update the version in package-lock.json
-        jq --arg new_rc_tag "$new_rc_tag" '.version = $new_rc_tag' package-lock.json > tmp.json && mv tmp.json package-lock.json
         
 
         if [ "${{ github.event.inputs.dry_run }}" == "true" ]; then
           echo "Dry run enabled. The following commands would be executed:"
           echo "git checkout -b $branch_name"
-          echo "git tag $new_rc_tag"
+          echo "npm run release -- --prerelease rc --dry-run"
           echo "git push -u origin $branch_name --follow-tags"
         else
           git checkout -b $branch_name
-          # Update the version in package.json
-          jq --arg new_rc_tag "$new_rc_tag" '.version = $new_rc_tag' package.json > tmp.json && mv tmp.json package.json
-          # Update the version in package-lock.json
-          jq --arg new_rc_tag "$new_rc_tag" '.version = $new_rc_tag' package-lock.json > tmp.json && mv tmp.json package-lock.json
-          git add package.json package-lock.json
-          git commit -m "chore: release candidate $new_rc_tag"
-          git tag $new_rc_tag
+          npm run release -- --prerelease rc
           git push -u origin $branch_name --follow-tags
         fi
+    - name: Checking
+      id: check_release
+      run: |
+        git status
