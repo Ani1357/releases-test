@@ -1,5 +1,17 @@
 # Changelog
 
+## [7.4.0](https://github.com/Ani1357/releases-test/compare/releases-test-v7.3.0...releases-test-v7.4.0) (2025-04-14)
+
+
+### Features
+
+* added feature ([e9498d6](https://github.com/Ani1357/releases-test/commit/e9498d695dd094c244383ca24db2340e1ae09432))
+
+
+### Bug Fixes
+
+* bug fixes ([05794a5](https://github.com/Ani1357/releases-test/commit/05794a51dd73170dbb35c73b952c24c65bf0a993))
+
 ## 7.3.0 (2025-04-14)
 
 
