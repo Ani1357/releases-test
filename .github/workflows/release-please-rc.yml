@@ -1,0 +1,52 @@
+on:
+  workflow_dispatch:
+    inputs:
+      create_or_patch:
+        description: 'Do you want to create a new release or a patch an existing one?'
+        required: true
+        default: 'create'
+        type: choice
+        options:
+        - create
+        - patch
+      rc_commit_sha:
+        description: 'If create was selected, provide commit from which to create the release candidate'
+        required: false
+        type: string
+      patch_commit_shas:
+        description: 'If patch was selected provide comma separated list of commits to be included in the patch'
+        required: false
+        type: string
+
+
+jobs:
+  create_release:
+    if: ${{ github.event.inputs.create_or_patch == 'create' }}
+    runs-on: ubuntu:22.04
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    - name: Determine commit from where to create the RC
+      id: determine_commit
+      run: |
+        if [ "${{ github.event.inputs.rc_commit_sha }}" == "" ]; then
+          echo "No commit sha provided, using the latest commit"
+          echo "commit_sha=$(git rev-parse HEAD)" >> $GITHUB_ENV
+        else
+          echo "Using provided commit sha"
+          echo "commit_sha=${{ github.event.inputs.rc_commit_sha }}" >> $GITHUB_ENV
+        fi
+    - name: Create release candidate
+      id: create_release
+      run: |
+        git reset --hard ${{ env.commit_sha }}
+        
+        latest_release_tag=$(git tag | sort -u | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | tail -n 1)
+        new_rc_tag="v$(echo $latest_release_tag | sed -E 's/v([0-9]+)\.([0-9]+)\.([0-9]+)/\1.\2.\3-rc1/')"
+        branch_name=rc/$(echo "${new_rc_tag%-*}"| cut -d. -f1-2)
+
+        git checkout -b $branch_name
+        git tag $new_rc_tag
+        git push -u origin $branch_name --follow-tags
