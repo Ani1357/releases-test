@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [7.6.0-rc.2](https://github.com/Ani1357/releases-test/compare/v7.6.0-rc.1...v7.6.0-rc.2) (2025-04-14)
+
+
+### Bug Fixes
+
+* another small bug fix ([ce72c36](https://github.com/Ani1357/releases-test/commit/ce72c36d31a6c9b2ae5a06233a075377f1d201ac))
+* small bug fix ([0967939](https://github.com/Ani1357/releases-test/commit/09679397c0659c0d58eab390c9861c85d14a3b29))
+
 ## [7.6.0-rc.1](https://github.com/Ani1357/releases-test/compare/v7.5.0...v7.6.0-rc.1) (2025-04-14)
 
 
