@@ -58,7 +58,7 @@ jobs:
         # Creating new rc version
         new_rc_version=$(echo "$latest_release_tag" | awk -F. '{printf "%s.%s-rc1", $1, $2+1}')
         echo "new_rc_version=$new_rc_version" >> $GITHUB_ENV
-        echo 'branch_name=rc/$(echo "${new_rc_tag%-*}"| cut -d. -f1-2)' >> $GITHUB_ENV'
+        echo 'branch_name=rc/$(echo "${new_rc_tag%-*}"| cut -d. -f1-2)' >> $GITHUB_ENV
         echo "New branch name is $branch_name"
 
     - name: Install release-please
@@ -69,7 +69,7 @@ jobs:
       id: create_release_candidate
       run: |
         git status
-        
+
         echo "Creating release candidate"
       
         if [ "${{ github.event.inputs.dry_run }}" == "true" ]; then
