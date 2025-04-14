@@ -29,15 +29,19 @@ on:
         - false
 
 jobs:
-  create_release:
-    if: ${{ github.event.inputs.create_or_patch == 'create' }}
+  create_patch_release:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v3
       with:
         fetch-depth: 0
+    - name: Install standard-version
+      run: |
+        npm install standard-version  
+
     - name: Determine commit from where to create the RC
+      if: ${{ github.event.inputs.create_or_patch == 'create' }}
       id: determine_commit
       run: |
         if [ "${{ github.event.inputs.rc_commit_sha }}" == "" ]; then
@@ -48,10 +52,8 @@ jobs:
           echo "commit_sha=${{ github.event.inputs.rc_commit_sha }}" >> $GITHUB_ENV
         fi
 
-    - name: Install standard-version
-      run: |
-        npm install standard-version  
     - name: Create release candidate branch
+      if: ${{ github.event.inputs.create_or_patch == 'create' }}
       id: create_release
       run: |
 
@@ -75,7 +77,15 @@ jobs:
           npm run release -- --prerelease rc
           git push -u origin $branch_name --follow-tags
         fi
-    - name: Checking
-      id: check_release
+
+    - name: Patch release candidate
+      if: ${{ github.event.inputs.create_or_patch == 'patch' }}
+      id: patch_rc
       run: |
         git status
+        commit_shas="${{ github.event.inputs.patch_commit_shas }}"
+        IFS=',' read -r -a commit_array <<< "$commit_shas"
+        for commit_sha in "${commit_array[@]}"; do
+          echo "Patching with commit: $commit_sha"
+          git cherry-pick -x $commit_sha
+        done
