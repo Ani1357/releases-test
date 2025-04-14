@@ -47,6 +47,10 @@ jobs:
           echo "Using provided commit sha"
           echo "commit_sha=${{ github.event.inputs.rc_commit_sha }}" >> $GITHUB_ENV
         fi
+
+    - name: Install standard-version
+      run: |
+        npm install standard-version  
     - name: Create release candidate branch
       id: create_release
       run: |
