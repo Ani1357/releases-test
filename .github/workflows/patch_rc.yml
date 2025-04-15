@@ -24,16 +24,8 @@ jobs:
         git config --global user.name "GitHub Action RC"
     - name: Release new RC version
       run: |
-        # Read version from package.json
-        VERSION=$(jq '.version' package.json -r)
-        TAG="v${VERSION}"
+        TAG="v$(jq '.version' package.json -r)"
 
-        # Check if the tag exists
-        if ! git rev-parse "$TAG" >/dev/null 2>&1; then
-          echo "Warning: It seems '$TAG' is not tagged in Git."
-        fi
-
-        # Check for fix/feat commits since the last tag
         COMMITS_WITH_CHANGES=$(git log -1 --pretty=%B | grep -E "^(feat:|fix:)")
 
         if [ -n "$COMMITS_WITH_CHANGES" ]; then
