@@ -25,3 +25,4 @@ jobs:
     - name: Release new RC version
       run: |
         npm run release -- --prerelease rc
+        git push --follow-tags
