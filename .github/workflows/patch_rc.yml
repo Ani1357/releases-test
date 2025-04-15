@@ -18,7 +18,6 @@ jobs:
     - name: Install dependencies
       run: |
         npm install standard-version
-        sudo apt update && sudo apt install jq -y
     - name: Configure Git
       run: |
         git config --global user.email "githubactions_rc@github.com"
@@ -27,7 +26,7 @@ jobs:
       run: |
         TAG="v$(jq '.version' package.json -r)"
 
-        if `git log -1 --pretty=%B | grep -E "^(feat:|fix:)"`; then
+        if `git log -1 --pretty=%B | grep -E "^(feat:|fix:)" &>/dev/null`; then
           echo "Detected feat/fix commits. Running standard-version..."
           npm run release -- --prerelease rc
           git push --follow-tags
