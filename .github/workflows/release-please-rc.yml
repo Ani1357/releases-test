@@ -3,20 +3,8 @@ name: Create Release Candidate
 on:
   workflow_dispatch:
     inputs:
-      create_or_patch:
-        description: 'Do you want to create a new release or a patch an existing one?'
-        required: true
-        default: 'create'
-        type: choice
-        options:
-        - create
-        - patch
       rc_commit_sha:
-        description: 'If create was selected, provide commit from which to create the release candidate'
-        required: false
-        type: string
-      patch_commit_shas:
-        description: 'If patch was selected provide comma separated list of commits to be included in the patch'
+        description: 'Commit from which to create the release candidate. If not provided, the latest commit on main will be used'
         required: false
         type: string
       dry_run:
@@ -41,7 +29,6 @@ jobs:
         npm install standard-version  
 
     - name: Determine commit from where to create the RC
-      if: ${{ github.event.inputs.create_or_patch == 'create' }}
       id: determine_commit
       run: |
         if [ "${{ github.event.inputs.rc_commit_sha }}" == "" ]; then
@@ -53,7 +40,6 @@ jobs:
         fi
 
     - name: Create release candidate branch
-      if: ${{ github.event.inputs.create_or_patch == 'create' }}
       id: create_release
       run: |
 
@@ -77,21 +63,3 @@ jobs:
           npm run release -- --prerelease rc
           git push -u origin $branch_name --follow-tags
         fi
-
-    - name: Patch release candidate
-      if: ${{ github.event.inputs.create_or_patch == 'patch' }}
-      id: patch_rc
-      run: |
-        git config --global user.email "githubactions_rc@github.com"
-        git config --global user.name "GitHub Action RC"
-        git status
-        commit_shas="${{ github.event.inputs.patch_commit_shas }}"
-        IFS=',' read -r -a commit_array <<< "$commit_shas"
-        for commit_sha in "${commit_array[@]}"; do
-          echo "Patching with commit: $commit_sha"
-          git cherry-pick -x $commit_sha
-        done
-        git push -u origin HEAD
-        npm run release -- --prerelease rc
-        git push -u origin HEAD --follow-tags
-        echo "Release candidate created and pushed to branch: ${{ github.head_ref }}"
