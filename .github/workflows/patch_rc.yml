@@ -27,9 +27,7 @@ jobs:
       run: |
         TAG="v$(jq '.version' package.json -r)"
 
-        COMMITS_WITH_CHANGES=$(git log -1 --pretty=%B | grep -E "^(feat:|fix:)")
-
-        if [ -n "$COMMITS_WITH_CHANGES" ]; then
+        if `git log -1 --pretty=%B | grep -E "^(feat:|fix:)"`; then
           echo "Detected feat/fix commits. Running standard-version..."
           npm run release -- --prerelease rc
           git push --follow-tags
