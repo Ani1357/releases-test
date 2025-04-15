@@ -1,0 +1,27 @@
+name: Patch Release Candidate
+
+on:
+ push:
+   branches:
+     - rc/*
+   tags-ignore:
+     - "*"
+
+jobs: 
+  patch_rc:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    - name: Install standard-version
+      run: |
+        npm install standard-version
+    - name: Configure Git
+      run: |
+        git config --global user.email "githubactions_rc@github.com"
+        git config --global user.name "GitHub Action RC"
+    - name: Release new RC version
+      run: |
+        npm run release -- --prerelease rc
