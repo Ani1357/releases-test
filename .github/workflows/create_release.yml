@@ -1,0 +1,43 @@
+name: Create Release Candidate
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'If you want to run the workflow without making any changes'
+        required: true
+        default: 'true'
+        type: choice
+        options:
+        - true
+        - false
+
+jobs:
+  create_patch_release:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    - name: Install dependencies
+      run: |
+        npm install standard-version  
+
+    - name: Create release/maintenance branch
+      id: get_latest_rc_tag
+      run: |
+        git config --global user.email "release_githubactions@github.com"
+        git config --global user.name "Release GitHub Action"
+
+        rc_branch=$(git rev-parse --abbrev-ref HEAD)
+        latest_rc_tag=$(git describe --tags --abbrev=0)
+        branch_name=${rc_branch//rc/release}
+
+        git checkout -b $branch_name
+        git push -u origin $branch_name --follow-tags
+
+    - name: Create release candidate branch
+      id: create_release
+      run: |
+        npm run release 

@@ -43,15 +43,13 @@ jobs:
       id: create_release
       run: |
 
-        git config --global user.email "githubactions_rc@github.com"
-        git config --global user.name "GitHub Action RC"
+        git config --global user.email "rc_githubactions@github.com"
+        git config --global user.name "Release Candidate GitHub Action "
         
         git reset --hard ${{ env.commit_sha }}
         
         latest_release_tag=$(git tag | sort -u | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | tail -n 1)
         branch_name=rc/$(echo "$latest_release_tag" | awk -F'[.]' '{print $1 "." ($2 + 1)}')
-
-        
 
         if [ "${{ github.event.inputs.dry_run }}" == "true" ]; then
           echo "Dry run enabled. The following commands would be executed:"x
