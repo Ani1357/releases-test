@@ -1,4 +1,4 @@
-name: Release Preview
+name: Release Preview Comment
 
 on:
   pull_request:
