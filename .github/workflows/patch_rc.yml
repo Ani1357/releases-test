@@ -30,9 +30,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        TAG="v$(jq '.version' package.json -r)"
-
         echo "Detected "feat"/"fix"/"chore: trigger" commits. Running standard-version..."
         npm run release -- --prerelease rc --skip.changelog 
         git push --follow-tags
+        TAG="v$(jq '.version' package.json -r)"
         gh release create "$TAG" --title="Release: $TAG" --notes="Automated release for $TAG" --latest=false -p
