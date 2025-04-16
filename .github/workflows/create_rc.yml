@@ -67,3 +67,12 @@ jobs:
           npm run release -- --prerelease rc --skip.changelog
           git push -u origin $branch_name --follow-tags
         fi
+    - name: Create Github Release
+      run: |
+        tag=$(jq -r '.version' package.json)
+        if [ "${{ github.event.inputs.dry_run }}" == "true" ]; then
+          echo "Dry run enabled. The following commands would be executed:"
+          echo "gh release create "$tag" --title="Release: $tag" --notes="Automated release for $tag" --latest=false -p"
+        else
+          gh release create "$tag" --title="Release: $tag" --notes="Automated release for $tag" --latest=false -p
+        fi

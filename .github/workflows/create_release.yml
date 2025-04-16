@@ -48,9 +48,9 @@ jobs:
         $dry git push -u origin $release_branch_name
         
         if [ "${{ github.event.inputs.dry_run }}" == "true" ]; then
-          npm run release -- --dry-run
+          npm run release -- --skip.tag --dry-run
         else
-          npm run release
+          npm run release -- --skip.tag
           git push --follow-tags
         fi
 
