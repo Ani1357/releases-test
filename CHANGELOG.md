@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [7.12.0](https://github.com/Ani1357/releases-test/compare/v7.12.0-rc.2...v7.12.0) (2025-04-16)
+
 ### [7.11.1](https://github.com/Ani1357/releases-test/compare/v7.11.0...v7.11.1) (2025-04-16)
 
 ## [7.11.0](https://github.com/Ani1357/releases-test/compare/v7.9.0...v7.11.0) (2025-04-16)
