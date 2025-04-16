@@ -52,7 +52,7 @@ jobs:
         # Use standard-version to determine the next version
         npm run release -- --skip.commit --skip.tag --skip.changelog
         new_version=$(jq -r '.version' package.json)
-        branch_name=rc/${new_version%.*}
+        branch_name=rc/v${new_version%.*}
         
         git reset --hard ${{ env.commit_sha }}
 
