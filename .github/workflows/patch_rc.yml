@@ -34,6 +34,8 @@ jobs:
           echo "No feat/fix commits since '$TAG'. Skipping version bump."
         fi
     - name: Create Github Release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         tag=$(jq -r '.version' package.json)
         gh release create "$tag" --title="Release: $tag" --notes="Automated release for $tag" --latest=false -p
