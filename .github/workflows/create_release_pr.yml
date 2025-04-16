@@ -44,8 +44,8 @@ jobs:
         release_version=${release_branch_name/release\//}
         echo "release_version=$release_version" >> $GITHUB_ENV
 
-        git checkout -b $release_branch_name || git checkout $release_branch_name
-        $dry git push -u origin $release_branch_name
+        git checkout -b $release_branch_name
+        $dry git push -u origin $release_branch_name || $dry git pull --rebase origin $release_branch_name && git push -u origin $release_branch_name
         
         if [ "${{ github.event.inputs.dry_run }}" == "true" ]; then
           npm run release -- --skip.tag --dry-run
