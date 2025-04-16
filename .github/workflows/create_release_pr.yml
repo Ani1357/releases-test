@@ -1,4 +1,4 @@
-name: Create Release.
+name: Create Release PR
 run-name: Create Release from branch ${{ github.ref_name }}
 
 on:
@@ -44,7 +44,7 @@ jobs:
         release_version=${release_branch_name/release\//}
         echo "release_version=$release_version" >> $GITHUB_ENV
 
-        git checkout -b $release_branch_name
+        git checkout -b $release_branch_name || git checkout $release_branch_name
         $dry git push -u origin $release_branch_name
         
         if [ "${{ github.event.inputs.dry_run }}" == "true" ]; then
@@ -62,6 +62,7 @@ jobs:
         release_branch_name=${{ env.release_branch_name }}
         if [ "${{ github.event.inputs.dry_run }}" == "true" ]; then
           echo "Dry run mode enabled. Skipping pull request creation."
+          echo "gh pr create --base main --head $release_branch_name --title 'chore(release): ${{ env.release_version }}' --body 'This PR merges the release branch $release_branch_name into main.' --label 'release'"
         else
           gh pr create --base main --head $release_branch_name --title "chore(release): ${{ env.release_version }}" --body "This PR merges the release branch $release_branch_name into main." --label "release"
         fi
