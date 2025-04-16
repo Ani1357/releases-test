@@ -1,67 +1,28 @@
-name: Create Release.
-run-name: Create Release from branch ${{ github.ref_name }}
+name: Create Release
 
 on:
-  workflow_dispatch:
-    inputs:
-      dry_run:
-        description: 'If you want to run the workflow without making any changes'
-        required: true
-        default: 'true'
-        type: choice
-        options:
-        - true
-        - false
+  push:
+    branches:
+      - main
+    tags-ignore:
+      - "*"
 
 jobs:
-  create_patch_release:
-    runs-on: ubuntu-latest
+  create_release:
+    runs-on: ubuntu-22.04
+    if: startsWith(github.event.head_commit.message, 'chore(release)') && !github.event.act
     steps:
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         fetch-depth: 0
     - name: Install dependencies
       run: |
-        npm install standard-version  
-
-    - name: Create release/maintenance branch
+        npm install standard-version
+    - name: Configure Git
       run: |
-        git config --global user.email "release_githubactions@github.com"
-        git config --global user.name "Release GitHub Action"
-
-        dry=${{ github.event.inputs.dry_run }}
-        if [ "$dry" == "true" ]; then
-          dry="echo"
-          echo "# Note: This script is executed in dry-run mode and will not perform the git-push"
-        else
-          dry=""
-        fi
-
-        rc_branch=${{ github.ref_name }}
-        release_branch_name=${rc_branch//rc/release}
-        echo "release_branch_name=$release_branch_name" >> $GITHUB_ENV
-        release_version=${release_branch_name/release\//}
-        echo "release_version=$release_version" >> $GITHUB_ENV
-
-        git checkout -b $release_branch_name
-        $dry git push -u origin $release_branch_name
-        
-        if [ "${{ github.event.inputs.dry_run }}" == "true" ]; then
-          npm run release -- --skip.tag --dry-run
-        else
-          npm run release -- --skip.tag
-          git push --follow-tags
-        fi
-
-    - name: Create Pull Request
-      id: create_pr
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        git config --global user.name "GitHub Action"
+        git config --global user.email "Release GitHub Action"
+    - name: Create Release
       run: |
-        release_branch_name=${{ env.release_branch_name }}
-        if [ "${{ github.event.inputs.dry_run }}" == "true" ]; then
-          echo "Dry run mode enabled. Skipping pull request creation."
-        else
-          gh pr create --base main --head $release_branch_name --title "Release ${{ env.release_version }}" --body "This PR merges the release branch $release_branch_name into main."
-        fi
+        npm run release
