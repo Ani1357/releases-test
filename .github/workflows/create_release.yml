@@ -1,4 +1,4 @@
-name: Create Release Candidate
+name: Create Release Candidate. Run it from the release candidate branch you want to promote to release.
 
 on:
   workflow_dispatch:
@@ -30,14 +30,34 @@ jobs:
         git config --global user.email "release_githubactions@github.com"
         git config --global user.name "Release GitHub Action"
 
+        dry=${{ github.event.inputs.dry_run }}
+        if [ "$dry" == "true" ]; then
+          dry="echo"
+          echo "# Note: This script is executed in dry-run mode and will not perform the git-push"
+        else
+          dry=""
+        fi
+
         rc_branch=$(git rev-parse --abbrev-ref HEAD)
         latest_rc_tag=$(git describe --tags --abbrev=0)
         branch_name=${rc_branch//rc/release}
+        release_version=${branch_name/release\//}
+        echo "release_version=$release_version" >> $GITHUB_ENV
 
         git checkout -b $branch_name
-        git push -u origin $branch_name --follow-tags
+        $dry git push -u origin $branch_name 
+        
 
     - name: Create release candidate branch
       id: create_release
       run: |
-        npm run release 
+        # Workaround: removing rc tags to force standard-version to include 
+        # all the changelog between the last release and the new one
+        for i in $(git tag | grep "${{ env.commit_sha }}.0-rc."); do git tag -d $i;done
+
+        if [ "${{ github.event.inputs.dry_run }}" == "true" ]; then
+          npm run release -- --dry-run
+        else
+          npm run release
+          git push --follow-tags
+        fi
