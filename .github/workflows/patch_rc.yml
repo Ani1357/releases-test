@@ -28,7 +28,7 @@ jobs:
 
         if `git log -1 --pretty=%B | grep -E "^(feat:|fix:|chore: trigger)" &>/dev/null`; then
           echo "Detected "feat"/"fix"/"chore: trigger" commits. Running standard-version..."
-          npm run release -- --prerelease rc
+          npm run release -- --prerelease rc --skip.changelog 
           git push --follow-tags
         else
           echo "No feat/fix commits since '$TAG'. Skipping version bump."
