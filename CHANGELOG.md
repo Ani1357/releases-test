@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [7.9.0](https://github.com/Ani1357/releases-test/compare/v7.7.0...v7.9.0) (2025-04-16)
+
+
+### Features
+
+* added feature1_7.9 ([d98a831](https://github.com/Ani1357/releases-test/commit/d98a8315a0d512a2fd2861a943607b0eca8010bb))
+* added feature1_v7.8 ([747f6a2](https://github.com/Ani1357/releases-test/commit/747f6a207b80d3977776b07f13bd0ed91a60a186))
+
+
+### Bug Fixes
+
+* a fix for feature1_7.9 ([973752f](https://github.com/Ani1357/releases-test/commit/973752fbf4a79ef7da38b681dcc5eaa195da76e5))
+* fixed feature1_v7.8 ([a2e7bce](https://github.com/Ani1357/releases-test/commit/a2e7bcea380a8c4d2cc62e2e03f26d3874fae0b4))
+
 ## [7.8.0](https://github.com/Ani1357/releases-test/compare/v7.8.0-rc.2...v7.8.0) (2025-04-16)
 
 ## [7.7.0](https://github.com/Ani1357/releases-test/compare/v7.7.0-rc.3...v7.7.0) (2025-04-16)
