@@ -26,7 +26,6 @@ jobs:
         npm install standard-version  
 
     - name: Create release/maintenance branch
-      id: get_latest_rc_tag
       run: |
         git config --global user.email "release_githubactions@github.com"
         git config --global user.name "Release GitHub Action"
@@ -39,26 +38,28 @@ jobs:
           dry=""
         fi
 
-        rc_branch=$(git rev-parse --abbrev-ref HEAD)
-        latest_rc_tag=$(git describe --tags --abbrev=0)
-        branch_name=${rc_branch//rc/release}
-        release_version=${branch_name/release\//}
+        rc_branch=${{ github.ref_name }}
+        release_branch_name=${rc_branch//rc/release}
+        echo "release_branch_name=$release_branch_name" >> $GITHUB_ENV
+        release_version=${release_branch_name/release\//}
         echo "release_version=$release_version" >> $GITHUB_ENV
 
-        git checkout -b $branch_name
-        $dry git push -u origin $branch_name 
+        git checkout -b $release_branch_name
+        $dry git push -u origin $release_branch_name
         
-
-    - name: Create release candidate branch
-      id: create_release
-      run: |
-        # Workaround: removing rc tags to force standard-version to include 
-        # all the changelog between the last release and the new one
-        # for i in $(git tag | grep "${{ env.release_version }}.0-rc."); do git tag -d $i;done
-
         if [ "${{ github.event.inputs.dry_run }}" == "true" ]; then
           npm run release -- --dry-run
         else
           npm run release
           git push --follow-tags
+        fi
+
+    - name: Create Pull Request
+      id: create_pr
+      run: |
+        release_branch_name=${{ env.release_branch_name }}
+        if [ "${{ github.event.inputs.dry_run }}" == "true" ]; then
+          echo "Dry run mode enabled. Skipping pull request creation."
+        else
+          gh pr create --base main --head $release_branch_name --title "Release ${{ env.release_version }}" --body "This PR merges the release branch $release_branch_name into main."
         fi
