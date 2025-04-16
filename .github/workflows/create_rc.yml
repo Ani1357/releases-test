@@ -68,6 +68,8 @@ jobs:
           git push -u origin $branch_name --follow-tags
         fi
     - name: Create Github Release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         tag=$(jq -r '.version' package.json)
         if [ "${{ github.event.inputs.dry_run }}" == "true" ]; then
