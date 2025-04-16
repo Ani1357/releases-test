@@ -10,7 +10,8 @@ on:
 jobs:
   create_release:
     runs-on: ubuntu-22.04
-    if: startsWith(github.event.head_commit.message, 'chore(release)') && !github.event.act
+    if: > 
+      startsWith(github.event.head_commit.message, 'chore(release): release trigger') && !github.event.act 
     steps:
     - name: Checkout
       uses: actions/checkout@v4
@@ -26,3 +27,4 @@ jobs:
     - name: Create Release
       run: |
         npm run release
+        git push --follow-tags

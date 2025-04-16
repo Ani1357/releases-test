@@ -64,5 +64,5 @@ jobs:
           echo "Dry run mode enabled. Skipping pull request creation."
           echo "gh pr create --base main --head $release_branch_name --title 'chore(release): ${{ env.release_version }}' --body 'This PR merges the release branch $release_branch_name into main.' --label 'release'"
         else
-          gh pr create --base main --head $release_branch_name --title "chore(release): ${{ env.release_version }}" --body "This PR merges the release branch $release_branch_name into main." --label "release"
+          gh pr create --base main --head $release_branch_name --title "chore(release): release trigger for ${{ env.release_version }}" --body "This PR merges the release branch $release_branch_name into main." --label "release"
         fi
