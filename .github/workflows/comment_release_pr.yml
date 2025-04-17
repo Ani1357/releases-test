@@ -2,7 +2,7 @@ name: Release Preview Comment
 
 on:
   pull_request:
-    types: [opened, edited, labeled, synchronize]
+    types: [opened]
 
 jobs:
   release-preview:
