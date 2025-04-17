@@ -111,16 +111,16 @@ jobs:
           echo "Chart and values files updated successfully with version $app_version"
 
           # Copy readme from repo into the charts and add tpl/chart-values.md
-          cp README.md chart/apl/
-          printf "\n\n" >>chart/apl/README.md
-          cat tpl/chart-values.md >>chart/apl/README.md
+          # cp README.md chart/apl/
+          # printf "\n\n" >>chart/apl/README.md
+          # cat tpl/chart-values.md >>chart/apl/README.md
 
           # Generate schema
-          npx js-yaml values-schema.yaml > chart/apl/values.schema.json
+          # npx js-yaml values-schema.yaml > chart/apl/values.schema.json
 
           # Set the global id for git as it seems needed by the next step when a custom image is used
-          git config --global user.email ${{ env.BOT_EMAIL }}
-          git config --global user.name ${{ env.BOT_USERNAME }}
+          git config --global user.email "rc_githubactions@github.com"
+          git config --global user.name "Release Candidate GitHub Action"
 
       #TODO: Use the same user id on the container as in the runner to avoid the "dubious ownership" error
       - name: Mark repository as safe for Git
