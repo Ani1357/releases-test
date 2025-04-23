@@ -44,7 +44,6 @@ jobs:
       - name: Install dependencies
         run: |
           npm install standard-version
-          sudo apt update && sudo apt install -y jq gh
 
       - name: Create release candidate tag & branch
         id: create_release
