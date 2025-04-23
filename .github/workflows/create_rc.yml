@@ -43,6 +43,10 @@ jobs:
           echo "No commit sha provided, using the latest commit on main: $commit_sha"
           echo "commit_sha=$commit_sha" >> $GITHUB_ENV
 
+      - name: Install standard-version
+        run: |
+          npm install standard-version
+
       - name: Create release candidate tag & branch
         id: create_release
         env:
