@@ -26,6 +26,16 @@ entries:
     version: 7.11.1
   my-webapp-chart:
   - apiVersion: v2
+    appVersion: v7.12.0-rc.2
+    created: "2025-04-23T13:14:22.630534514Z"
+    description: A Helm chart for Kubernetes
+    digest: c7458d558f8bdd82e5e53eee37de52727ef3e8d180536dd5d97a58e4132d299f
+    name: my-webapp-chart
+    type: application
+    urls:
+    - https://github.com/Ani1357/releases-test/releases/download/my-webapp-chart-7.12.0-rc.2/my-webapp-chart-7.12.0-rc.2.tgz
+    version: 7.12.0-rc.2
+  - apiVersion: v2
     appVersion: v7.12.0-rc.1
     created: "2025-04-23T13:10:45.450576855Z"
     description: A Helm chart for Kubernetes
@@ -45,4 +55,4 @@ entries:
     urls:
     - https://github.com/Ani1357/releases-test/releases/download/my-webapp-chart-7.12.0-rc.0/my-webapp-chart-7.12.0-rc.0.tgz
     version: 7.12.0-rc.0
-generated: "2025-04-23T13:10:45.450586613Z"
+generated: "2025-04-23T13:14:22.63055895Z"
