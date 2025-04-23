@@ -49,15 +49,15 @@ jobs:
           DRY_RUN: ${{ github.event.inputs.dry_run }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           COMMIT_SHA: ${{ env.commit_sha }}
-          BOT_EMAIL: ${{ secrets.BOT_EMAIL }}
-          BOT_USERNAME: ${{ secrets.BOT_USERNAME }}
+          BOT_EMAIL: ${{ vars.BOT_EMAIL }}
+          BOT_USERNAME: ${{ vars.BOT_USERNAME }}
         run: |
           ci/scripts/create_rc.sh
 
       - name: Prepare chart
         env:
-          BOT_EMAIL: ${{ secrets.BOT_EMAIL }}
-          BOT_USERNAME: ${{ secrets.BOT_USERNAME }}
+          BOT_EMAIL: ${{ vars.BOT_EMAIL }}
+          BOT_USERNAME: ${{ vars.BOT_USERNAME }}
         id: prepare_chart
         run: |
           ci/scripts/prepare_chart_for_release.sh
