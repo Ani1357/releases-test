@@ -32,15 +32,12 @@ jobs:
           fetch-depth: 0
 
       - name: Determine commit from where to create the RC
+        if : ${{ github.event.inputs.rc_commit_sha == '' }}
         id: determine_commit
         run: |
-          if [ "${{ github.event.inputs.rc_commit_sha }}" == "" ]; then
-            echo "No commit sha provided, using the latest commit on main"
-            echo "commit_sha=$(git rev-parse HEAD)" >> $GITHUB_ENV
-          else
-            echo "Using provided commit sha: ${{ github.event.inputs.rc_commit_sha }}"
-            echo "commit_sha=${{ github.event.inputs.rc_commit_sha }}" >> $GITHUB_ENV
-          fi
+          commit_sha=$(git rev-parse HEAD)
+          echo "No commit sha provided, using the latest commit on main: $commit_sha"
+          echo "commit_sha=$commit_sha" >> $GITHUB_ENV
 
       #TODO: Use the same user id on the container as in the runner to avoid the "dubious ownership" error
       - name: Mark repository as safe for Git
