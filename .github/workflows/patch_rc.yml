@@ -10,10 +10,7 @@ on:
 jobs:
   patch_rc:
     if: startsWith(github.event.head_commit.message, 'fix:') && !github.event.act
-    runs-on: ubuntu-latest
-    container:
-      image: linode/apl-tools:v2.8.2
-      options: --user 0 # See https://docs.github.com/en/actions/sharing-automations/creating-actions/dockerfile-support-for-github-actions#user
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -23,6 +20,7 @@ jobs:
       - name: Install dependencies
         run: |
           npm install standard-version
+          apt update && apt install -y jq gh
 
       - name: Configure Git
         run: |
@@ -41,6 +39,9 @@ jobs:
 
       - name: Prepare chart
         id: prepare_chart
+        env:
+          BOT_EMAIL: ${{ vars.BOT_EMAIL }}
+          BOT_USERNAME: ${{ vars.BOT_USERNAME }}
         run: |
           ci/scripts/prepare_chart_for_release.sh
 
