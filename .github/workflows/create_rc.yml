@@ -49,6 +49,8 @@ jobs:
           DRY_RUN: ${{ github.event.inputs.dry_run }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           COMMIT_SHA: ${{ env.commit_sha }}
+          BOT_EMAIL: ${{ secrets.BOT_EMAIL }}
+          BOT_USERNAME: ${{ secrets.BOT_USERNAME }}
         run: |
           ci/scripts/create_rc.sh
 
