@@ -70,7 +70,7 @@ jobs:
         if: ${{ github.event.inputs.dry_run == 'true'}}
         run: |
           echo -e "This Pipeline was executed in dry run mode so it will not publish the helm chart.\nBelow are some useful data to check:"
-          echo "Release candidate branch: ${{ github.ref }}"
+          echo "Release candidate branch: $(git rev-parse --abbrev-ref HEAD"
           echo "Contents of: chart/apl/Chart.yaml"
           cat chart/apl/Chart.yaml
           echo "Contents of: package.json"
