@@ -20,7 +20,6 @@ jobs:
       - name: Install dependencies
         run: |
           npm install standard-version
-          apt update && apt install -y jq gh
 
       - name: Configure Git
         run: |
