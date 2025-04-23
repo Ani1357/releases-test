@@ -1,5 +1,5 @@
 name: Create Release Candidate.
-run-name: Create Release Candidate from commit ${{ github.event.inputs.rc_commit_sha }}
+run-name: Create Release Candidate from commit ${{ github.event.inputs.rc_commit_sha || 'main' }}
 
 on:
   workflow_dispatch:
