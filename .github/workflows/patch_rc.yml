@@ -40,7 +40,6 @@ jobs:
         if: ${{ env.RC_RELEASE == 'true' }}
         run: |
           npm install standard-version
-          apt update && apt install -y jq gh
 
       - name: Configure Git
         if: ${{ env.RC_RELEASE == 'true' }}
