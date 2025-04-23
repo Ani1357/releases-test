@@ -33,7 +33,7 @@ jobs:
 
       #TODO: Use the same user id on the container as in the runner to avoid the "dubious ownership" error
       - name: Mark repository as safe for Git
-        run: git config --global --add safe.directory /__w/releases-test
+        run: git config --global --add safe.directory /__w/releases-test/releases-test
 
       - name: Determine commit from where to create the RC
         if : ${{ github.event.inputs.rc_commit_sha == '' }}
