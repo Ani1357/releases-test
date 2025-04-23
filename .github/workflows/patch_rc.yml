@@ -1,34 +1,56 @@
 name: Patch Release Candidate
 
 on:
- push:
-   branches:
-     - rc/*
-   tags-ignore:
-     - "*"
+  push:
+    branches:
+      - rc/*
+    tags-ignore:
+      - '*'
 
-jobs: 
+jobs:
   patch_rc:
     if: startsWith(github.event.head_commit.message, 'fix:') && !github.event.act
     runs-on: ubuntu-latest
+    container:
+      image: linode/apl-tools:v2.8.2
+      options: --user 0 # See https://docs.github.com/en/actions/sharing-automations/creating-actions/dockerfile-support-for-github-actions#user
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-      with:
-        fetch-depth: 0
-    - name: Install dependencies
-      run: |
-        npm install standard-version
-    - name: Configure Git
-      run: |
-        git config --global user.email "githubactions_rc@github.com"
-        git config --global user.name "GitHub Action RC"
-    - name: Release new RC version
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        echo "Detected "feat"/"fix"/"chore: trigger" commits. Running standard-version..."
-        npm run release -- --prerelease rc --skip.changelog 
-        git push --follow-tags
-        TAG="v$(jq '.version' package.json -r)"
-        gh release create "$TAG" --title="Release: $TAG" --notes="Automated release for $TAG" --latest=false -p
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Install dependencies
+        run: |
+          npm install standard-version
+
+      - name: Configure Git
+        run: |
+          git config --global user.email "githubactions_rc@github.com"
+          git config --global user.name "GitHub Action RC"
+
+      - name: Release new RC version
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "Detected "feat"/"fix"/"chore: trigger" commits. Running standard-version..."
+          npm run release -- --prerelease rc --skip.changelog 
+          git push --follow-tags
+          TAG="v$(jq '.version' package.json -r)"
+          gh release create "$TAG" --title="Release: $TAG" --notes="Automated release for $TAG" --latest=false -p
+
+      - name: Prepare chart
+        id: prepare_chart
+        run: |
+          ci/scripts/prepare_chart_for_release.sh
+
+      - name: Create and publish otomi chart release
+        if: ${{ github.event.inputs.dry_run == 'false' }}
+        id: chart_release
+        uses: helm/chart-releaser-action@v1.7.0
+        with:
+          charts_dir: chart
+          skip_existing: true
+          mark_as_latest: false
+        env:
+          CR_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
