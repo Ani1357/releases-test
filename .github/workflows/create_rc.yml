@@ -1,5 +1,5 @@
 name: Create Release Candidate.
-run-name: Create Release Candidate from commit ${{ github.event.inputs.rc_commit_sha || 'main' }}
+run-name: Create Release Candidate from ${{ github.event.inputs.rc_commit_sha || 'main' }}
 
 on:
   workflow_dispatch:
@@ -36,12 +36,17 @@ jobs:
         run: git config --global --add safe.directory /__w/releases-test/releases-test
 
       - name: Determine commit from where to create the RC
-        if : ${{ github.event.inputs.rc_commit_sha == '' }}
         id: determine_commit
         run: |
-          commit_sha=$(git rev-parse HEAD)
-          echo "No commit sha provided, using the latest commit on main: $commit_sha"
-          echo "commit_sha=$commit_sha" >> $GITHUB_ENV
+          if [ -n "${{ github.event.inputs.rc_commit_sha }}" ]; then
+            commit_sha="${{ github.event.inputs.rc_commit_sha }}"
+            echo "Using provided commit sha: $commit_sha"
+            echo "commit_sha=$commit_sha" >> $GITHUB_ENV
+          else
+            commit_sha=$(git rev-parse HEAD)
+            echo "No commit sha provided, using the latest commit on main: $commit_sha"
+            echo "commit_sha=$commit_sha" >> $GITHUB_ENV
+          fi
 
       - name: Install standard-version
         run: |
