@@ -77,11 +77,19 @@ jobs:
           echo "This Pipeline was executed in dry run mode so it will not publish the helm chart."
           echo "Below are some useful data to check:"
           echo "Release candidate branch: $(git rev-parse --abbrev-ref HEAD)"
+          echo "-*-*--*-*--*-*--*-*--*-*--*-*--*-*--*-*-*--*-*--*-*--*-*--*-*--*-*--*-*--*-*--*-*"
           echo "Contents of: chart/apl/Chart.yaml"
           cat chart/apl/Chart.yaml
+          echo "-*-*--*-*--*-*--*-*--*-*--*-*--*-*--*-*-*--*-*--*-*--*-*--*-*--*-*--*-*--*-*--*-*"
           echo "Contents of: package.json"
           cat package.json
-
+          echo "-*-*--*-*--*-*--*-*--*-*--*-*--*-*--*-*-*--*-*--*-*--*-*--*-*--*-*--*-*--*-*--*-*"
+          echo "Latest 5 commits on the release candidate branch"
+          git log -n 5 --pretty=format:"%h %s" --abbrev-commit
+          echo "-*-*--*-*--*-*--*-*--*-*--*-*--*-*--*-*-*--*-*--*-*--*-*--*-*--*-*--*-*--*-*--*-*"
+          echo "Commits behind main branch VS Commits ahead of main branch"
+          git rev-list --left-right --count origin/main...HEAD
+          
       - name: Create and publish otomi chart release
         if: ${{ github.event.inputs.dry_run == 'false' }}
         id: chart_release
