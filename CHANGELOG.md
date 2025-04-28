@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [7.12.0](https://github.com/Ani1357/releases-test/compare/v7.11.1...v7.12.0) (2025-04-28)
+
+
+### Features
+
+* added feature1_7.12 ([ce5bfa0](https://github.com/Ani1357/releases-test/commit/ce5bfa03d9a6d9379845d997a8aa829caf0e76ab))
+* added feature1_7.12 ([e308f3a](https://github.com/Ani1357/releases-test/commit/e308f3a3de217f698955106f9d61f94301fb054c))
+* added feature1_7.13 ([d818ef3](https://github.com/Ani1357/releases-test/commit/d818ef3588f08a206a8e1c2fcffb6bbb0cdbe103))
+* added values-schema ([80c508a](https://github.com/Ani1357/releases-test/commit/80c508aaa1e69a642846e55af4fbf9079570e500))
+* emulating apl ([8670bcd](https://github.com/Ani1357/releases-test/commit/8670bcda51cf532fd1f33477b19066c10c1c14c1))
+* feature for v7.12 ([98e0a20](https://github.com/Ani1357/releases-test/commit/98e0a206c8478324d93969417c9cdb55a6d687bd))
+* feature for v7.13 ([fac7f5b](https://github.com/Ani1357/releases-test/commit/fac7f5bdf389334d515f4387684b077ee87ad665))
+* reverted changes in main app ([ffc2e4c](https://github.com/Ani1357/releases-test/commit/ffc2e4c8aacf232dcf9b128ecedb507aa3847c7f))
+
+
+### Bug Fixes
+
+* a bug fix ([e5cb071](https://github.com/Ani1357/releases-test/commit/e5cb071d311ee1a3379789f5d5d7940f1415941e))
+* a fix for feature1_7.12 ([96abdf4](https://github.com/Ani1357/releases-test/commit/96abdf4e4dc24f3cabe231a6cad43bf43520a870))
+* a fix for feature1_7.12 ([66b7af5](https://github.com/Ani1357/releases-test/commit/66b7af5625e44320770898016bde37c41b38569e))
+* added a fix for feature1_7.12 ([e7a4dd6](https://github.com/Ani1357/releases-test/commit/e7a4dd6906d6ad61c8e62f1b4ded90f1d12ee434))
+* another fix for feature1_7.12 ([e383772](https://github.com/Ani1357/releases-test/commit/e38377205c22666fb180576551208e07fa00bca6))
+* another fix for feature1_7.12 ([b37ea2a](https://github.com/Ani1357/releases-test/commit/b37ea2a97f36032b2de348b2c33badbb66bc1458))
+
 ### [7.11.1](https://github.com/Ani1357/releases-test/compare/v7.11.0...v7.11.1) (2025-04-16)
 
 ## [7.11.0](https://github.com/Ani1357/releases-test/compare/v7.9.0...v7.11.0) (2025-04-16)
